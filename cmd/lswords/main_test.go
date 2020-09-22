@@ -14,13 +14,16 @@ func Test_run(t *testing.T) {
 	tests := []struct {
 		name    string
 		args    args
-		wantOut string
+		wantOut []string
 		wantErr string
 	}{
 		{
 			"simple txt",
 			args{strings.NewReader(`abc abc def abc`)},
-			"     3  75.00%  abc\n     1  25.00%  def\n",
+			[]string{
+				"3  75.00%  abc\n",
+				"1  25.00%  def\n",
+			},
 			"",
 		},
 	}
@@ -29,8 +32,12 @@ func Test_run(t *testing.T) {
 			out := &bytes.Buffer{}
 			err := &bytes.Buffer{}
 			run(tt.args.in, out, err)
-			if gotOut := out.String(); gotOut != tt.wantOut {
-				t.Errorf("run() = %v, want %v", gotOut, tt.wantOut)
+			gotOut := out.String()
+			for _, wOut := range tt.wantOut {
+				if !strings.Contains(gotOut, wOut) {
+					t.Errorf("run() should contain: \n%s\ngot:\n%s",
+						wOut, gotOut)
+				}
 			}
 			if gotErr := err.String(); gotErr != tt.wantErr {
 				t.Errorf("run() = %v, want %v", gotErr, tt.wantErr)

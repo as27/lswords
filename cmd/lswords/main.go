@@ -28,6 +28,8 @@ func run(in io.Reader, out, err io.Writer) {
 		total += w.Count
 	}
 	i := 1
+	fmt.Fprintf(out, "%6s %6s  %s\n", "count", "in %", "word")
+	fmt.Fprintln(out, "-----------------------------")
 	for _, w := range words {
 		if i > *flagTop {
 			break
