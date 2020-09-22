@@ -12,7 +12,7 @@ func words(r io.Reader) map[string]int {
 	scanner := bufio.NewScanner(r)
 	scanner.Split(bufio.ScanWords)
 	for scanner.Scan() {
-		w := strings.Trim(scanner.Text(), "'\",.!;:")
+		w := strings.Trim(scanner.Text(), "()&{}/'\",.!;:")
 		if skipWord(w) {
 			continue
 		}
