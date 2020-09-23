@@ -21,7 +21,7 @@ func main() {
 	run(os.Stdin, os.Stdout, os.Stderr)
 }
 
-func run(in io.Reader, out, err io.Writer) {
+func run(in io.Reader, out, outerr io.Writer) {
 	words := count.Words(in)
 	total := 0
 	for _, w := range words {

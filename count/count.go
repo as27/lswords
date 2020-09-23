@@ -1,3 +1,4 @@
+// Package count is for counting words of a given inputstream
 package count
 
 import (
@@ -7,6 +8,8 @@ import (
 	"strings"
 )
 
+// words count the words of the io.Reader and stores everything
+// inside a map.
 func words(r io.Reader) map[string]int {
 	counter := make(map[string]int)
 	scanner := bufio.NewScanner(r)
@@ -21,6 +24,7 @@ func words(r io.Reader) map[string]int {
 	return counter
 }
 
+// skipWord defines words, which should not be counted
 func skipWord(w string) bool {
 	switch w {
 	case "":
@@ -29,11 +33,16 @@ func skipWord(w string) bool {
 	return false
 }
 
+// Word representate the result of counting the occurences
+// of a word in a text.
 type Word struct {
 	Name  string
 	Count int
 }
 
+// Words scanns the data from the io.Reader and creates
+// a slice of Words. The slice is sorted by the word
+// count.
 func Words(r io.Reader) []Word {
 	wordsMap := words(r)
 	words := []Word{}
